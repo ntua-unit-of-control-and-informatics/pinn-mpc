@@ -1,144 +1,72 @@
-# PINN-MPC
-Code to accompany the research: **“An Explicit Model Predictive Control Framework Based on Physics-Informed Neural Networks.”**
+# pinn-mpc
+Code to accompany the research on: **"An Explicit Model Predictive Control Framework Based On Physics-Informed Neural Networks."**
 
 ## Table of Contents
-- Overview
-- Repository Structure
-- Provided Notebooks
-- Training & Evaluation Pipeline
-- Datasets
-- How to Run
-- Prerequisites
-- License
-
----
+- [Overview](#overview)
+- [Code](#code)
+- [How to Run Code](#how-to-run-code)
+- [Prerequisites](#prerequisites)
+- [License](#license)
 
 ## Overview
-This repository contains the full implementation of a **Physics-Informed Neural Network (PINN)** used as an explicit **Model Predictive Controller (MPC)** for nonlinear dynamical systems.
+This repository contains the Python notebooks developed as part of the research titled **"An Explicit Model Predictive Control Framework Based On Physics-Informed Neural Networks."** by Argyri Kardamaki, Teo Protoulis, Alex Alexandridis and Haralambos Sarimveis.
 
-The PINN incorporates the system's differential equations directly into its loss function, enabling it to learn optimal closed-loop behavior **offline**, and act as a fast explicit MPC **online**.
+We implement **Physics-Informed Neural Networks (PINNs)** to approximate the explicit solution of nonlinear **Model Predictive Control (MPC)** problems. The controllers learn closed-loop behavior offline by training on simulated trajectories while embedding system physics directly into the loss function.
 
-The approach includes:
-- Physics-based residual enforcing system dynamics
-- Tracking objective toward a set-point
-- Initial-condition matching
-- Soft state & control constraints
-- Closed-loop simulations with metrics and plots
+The **PINN-MPC** framework minimizes a composite loss consisting of:
+- **Physics residuals** from the system dynamics,
+- **Tracking errors** toward a set-point trajectory,
+- **Initial-condition consistency**, and
+- **Soft constraints** on states and control inputs.
 
-Includes both:
-- **SISO nonlinear water tank**
-- **MIMO nonlinear process (research case study)**
+The repository includes implementations for both:
+- **SISO** nonlinear water-tank system
+- **MIMO** nonlinear benchmark system used in the research study
 
----
+Both controllers are trained offline and evaluated through extensive closed-loop simulations.
 
-## Repository Structure
-```
-.
-├── PINN_MPC_SISO_Github_Code.ipynb      # SISO training + validation + closed-loop evaluation
-├── PINN_MPC_MIMO_Github_Code.ipynb      # MIMO training + validation + closed-loop evaluation
-│
-├── mimo_training_samples_x.pt           # Training dataset: x0_all
-├── mimo_training_samples_ysp.pt         # Training dataset: ysp_all
-├── mimo_training_samples_ud.pt          # Training dataset: u0_all, d0_all, meta
-│
-├── mimo_test_samples.pt                 # MIMO test dataset
-├── siso_training_samples.pt             # SISO training dataset
-├── siso_test_samples.pt                 # SISO test dataset
-│
-├── LICENSE-CC-BY-NC-SA.txt
-└── README.md
-```
+## Code
+Two notebooks are provided:
 
-The MIMO training dataset is split across three `.pt` files so each is compatible with GitHub size limits.
+- `PINN_MPC_SISO_Github_Code.ipynb` – full SISO PINN-MPC training, validation metrics, and closed-loop plots.
+- `PINN_MPC_MIMO_Github_Code.ipynb` – full MIMO PINN-MPC training, validation, and closed-loop performance.
 
----
+The code includes clearly separated sections for:
+- **Training** using a two-phase Adam optimizer;
+- **Validation & metrics** on test scenarios;
+- **Closed-loop simulations** with performance plots.
 
-## Provided Notebooks
-### **PINN_MPC_SISO_Github_Code.ipynb**
-Includes:
-- Training the SISO PINN-MPC
-- Physics-informed + tracking loss
-- Performance metrics (RMSE, IAE, overshoot, settling time)
-- Closed-loop simulation plots
+The MIMO training dataset is split into three files for GitHub compatibility:
+- `mimo_training_samples_x.pt` – initial states (`x0_all`)
+- `mimo_training_samples_ysp.pt` – set-points (`ysp_all`)
+- `mimo_training_samples_ud.pt` – inputs, disturbances, and metadata (`u0_all`, `d0_all`, `meta`)
 
-### **PINN_MPC_MIMO_Github_Code.ipynb**
-Includes:
-- Full MIMO PINN-MPC training
-- Dataset stitching (x, ysp, ud/meta)
-- Evaluation on test scenarios
-- Closed-loop rollouts and metrics
+Test datasets are also included for both SISO and MIMO systems.
 
-Both notebooks are self-contained and runnable in **Google Colab** or Jupyter.
+Users may freely adjust hyperparameters (loss weights, batch size, learning rates, prediction horizon, etc.) to explore different control behaviors.
 
----
+## How to Run Code
 
-## Training & Evaluation Pipeline
-Each notebook implements:
+1. Open the desired notebook (`PINN_MPC_SISO_Github_Code.ipynb` or `PINN_MPC_MIMO_Github_Code.ipynb`) in **Jupyter** or **Google Colab**.
+2. Upload the corresponding training dataset files.
+3. Run all cells to:
+   - Train the PINN-MPC controller,
+   - Evaluate it on challenging validation scenarios,
+   - Visualize closed-loop behavior.
+4. Modify training or simulation parameters in the relevant sections to experiment with different configurations.
 
-### 1. Load Dataset
-For MIMO:
-- `mimo_training_samples_x.pt` → x0_all
-- `mimo_training_samples_ysp.pt` → ysp_all
-- `mimo_training_samples_ud.pt` → u0_all, d0_all, meta
-
-### 2. Train the PINN-MPC
-- Mini-batch sampling
-- Autograd for physics residual
-- Composite loss (physics + tracking + IC + constraints)
-- Two-phase Adam training
-
-### 3. Validation
-Evaluated on:
-- Set-point changes
-- Disturbances
-- Noise robustness
-
-Metrics include RMSE, IAE, overshoot %, settling time.
-
-### 4. Closed-Loop Plots
-Generated after training.
-
----
-
-## Datasets
-### SISO
-- `siso_training_samples.pt`
-- `siso_test_samples.pt`
-
-### MIMO (split into 3 files)
-- `mimo_training_samples_x.pt` (x0_all)
-- `mimo_training_samples_ysp.pt` (ysp_all)
-- `mimo_training_samples_ud.pt` (u0_all, d0_all, meta)
-
-### MIMO Test
-- `mimo_test_samples.pt`
-
----
-
-## How to Run
-### **Google Colab (recommended)**
-1. Upload the notebook
-2. Upload required dataset files
-3. Enable GPU:
+**Performance Tip:** For significantly faster training, run the notebook on a **GPU**. In Google Colab, activate GPU under:
 ```
 Runtime → Change runtime type → GPU
 ```
-4. Run all cells
-
-### **Local Jupyter**
-Install dependencies and run with Jupyter Notebook.
-
----
 
 ## Prerequisites
-- Python 3.8+
-- PyTorch 2.0+
-- NumPy
-- Matplotlib
-- SciPy
-
----
+This project requires **Python 3.8+** and the following packages:
+- `torch` (PyTorch ≥ 2.0)
+- `numpy`
+- `matplotlib`
+- `scipy`
 
 ## License
-Licensed under **CC BY-NC-SA 4.0**. See `LICENSE-CC-BY-NC-SA.txt`.
-
+This project is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License**.
+See the file `LICENSE-CC-BY-NC-SA.txt` for details.
