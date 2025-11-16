@@ -20,8 +20,8 @@ The **PINN-MPC** framework minimizes a composite loss consisting of:
 - **Soft constraints** on states and control inputs.
 
 The repository includes implementations for both:
-- **SISO** nonlinear water-tank system
-- **MIMO** nonlinear benchmark system used in the research study
+- **SISO** nonlinear water-tank system used in the research study
+- **MIMO** nonlinear quadruple water-tank system used in the research study
 
 Both controllers are trained offline and evaluated through extensive closed-loop simulations.
 
