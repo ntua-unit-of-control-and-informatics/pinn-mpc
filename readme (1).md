@@ -55,10 +55,7 @@ Users may freely adjust hyperparameters (loss weights, batch size, learning rate
    - Visualize closed-loop behavior.
 4. Modify training or simulation parameters in the relevant sections to experiment with different configurations.
 
-**Performance Tip:** For significantly faster training, run the notebook on a **GPU**. In Google Colab, activate GPU under:
-```
-Runtime → Change runtime type → GPU
-```
+**Performance Tip**: Users are encouraged to **run the code on a GPU** to significantly reduce training time. To run your notebook on a local GPU with Google Colab, see Official Colab guidance:  https://research.google.com/colaboratory/local-runtimes.html
 
 ## Prerequisites
 This project requires **Python 3.8+** and the following packages:
