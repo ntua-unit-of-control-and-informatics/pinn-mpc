@@ -36,19 +36,19 @@ The code includes clearly separated sections for:
 - **Validation & metrics** on test scenarios;
 - **Closed-loop simulations** with performance plots.
 
-The MIMO training dataset is split into three files for GitHub compatibility:
+The MIMO training episodes are split into three files for GitHub compatibility with size:
 - `mimo_training_samples_x.pt` – initial states (`x0_all`)
 - `mimo_training_samples_ysp.pt` – set-points (`ysp_all`)
-- `mimo_training_samples_ud.pt` – inputs, disturbances, and metadata (`u0_all`, `d0_all`, `meta`)
+- `mimo_training_samples_ud.pt` – inputs, disturbances, and metadata (`u0_all`, `d0_all`)
 
-Test datasets are also included for both SISO and MIMO systems.
+Test episodes are also included for both SISO and MIMO systems.
 
 Users may freely adjust hyperparameters (loss weights, batch size, learning rates, prediction horizon, etc.) to explore different control behaviors.
 
 ## How to Run Code
 
 1. Open the desired notebook (`PINN_MPC_SISO_Github_Code.ipynb` or `PINN_MPC_MIMO_Github_Code.ipynb`) in **Jupyter** or **Google Colab**.
-2. Upload the corresponding training dataset files.
+2. Upload the corresponding training and test episodes (.pt files).
 3. Run all cells to:
    - Train the PINN-MPC controller,
    - Evaluate it on challenging validation scenarios,
