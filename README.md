@@ -9,8 +9,8 @@ Code to accompany the research paper titled **"An Explicit Model Predictive Cont
 - [License](#license)
 
 ## Overview
-This repository contains the Python notebooks developed as part of the research titled **"An Explicit Model Predictive Control Framework Based On Physics-Informed Neural Networks."** by Argyri Kardamaki, Teo Protoulis, Alex Alexandridis and Haralambos Sarimveis.
-(doi: https://doi.org/10.1016/j.jprocont.2026.103634)
+This repository contains the Python notebooks developed as part of the research titled **"An Explicit Model Predictive Control Framework Based On Physics-Informed Neural Networks."** by Argyri Kardamaki, Teo Protoulis, Alex Alexandridis and Haralambos Sarimveis
+(doi: https://doi.org/10.1016/j.jprocont.2026.103634).
 
 We implement **Physics-Informed Neural Networks (PINNs)** to approximate the explicit solution of nonlinear **Model Predictive Control (MPC)** problems. The controllers learn closed-loop behavior offline by training on simulated trajectories while embedding system physics directly into the loss function.
 
